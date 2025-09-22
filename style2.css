@@ -3,10 +3,10 @@
   padding: 0;
   box-sizing: border-box;
 }
-/* body::-webkit-scrollbar {
+body::-webkit-scrollbar {
   display: none;
   background-color: #050505;
-} */
+}
 :root {
   --bg-primary: #0a0a0f;
   --bg-secondary: #1a1a2e;
@@ -39,11 +39,10 @@
 
 body {
   font-family: 'Inter', sans-serif;
-  color: var(--text-secondary);
+  color: var(--text-primary);
   line-height: 1.7;
   z-index: -1;
   overflow-x: hidden;
-  overflow: hidden;
 }
 
 .main {
@@ -134,13 +133,13 @@ body {
 
 .hero-image {
   position: absolute;
-  /* top: 10%;*/
-  left: 10%; 
+  top: 6%;
+  left: 10%;
   min-width: 100vh;
-  min-height: 100vh;
+  min-height: 90vh;
   z-index: -1;
-  background: url(/hero-image.png) no-repeat center/cover;
-  background-attachment: fixed;
+  background-image: url(/hero-image.png);
+  background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
 }
@@ -153,7 +152,7 @@ body {
   opacity: 0 !important;
   transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
     opacity 0.6s ease;
-    background-color: #0b0b0b;
+    background-color: #465bff;
 }
 
 .hero.show {
@@ -167,7 +166,6 @@ body {
   align-items: center;
   padding: 7px 75px 7px 20px;
   opacity: 0;
-  position: relative;
   transform: translateY(-20px);
   animation: slideDown 0.8s ease forwards;
   animation-delay: 1s;
@@ -303,9 +301,9 @@ body {
 .about-wrapper {
   height: 100vh;
   width: 100%;
-  position: relative;
+  /* position: relative; */
   overflow: hidden;
-  background-color: #b0acac;
+  background-color: #10b981;
 }
 
 .about-section {
@@ -317,16 +315,12 @@ body {
 }
 
 .projects {
-  position: relative;
+  /* position: absolute; */
   inset: 0;
   opacity: 0;
   display: flex;
-  height: 100vh;
   align-items: center;
   justify-content: center;
-  color: var(--warning);
-  background-color: #1cefa9;
-  z-index: 100;
 }
 
 .about-section .container {
@@ -438,7 +432,7 @@ body {
 
 :root {
   --bg: #161617;
-  --muted: #606065;
+  --muted: #2b2b2d;
   --accent: #465bff;
   --accent-dark: #cc2a2a;
   --text: #ffffff;
@@ -458,24 +452,27 @@ a {
   height: 100vh;
   position: relative;
   overflow: hidden;
-  background-color: var(--bg);
 }
 
 .FooterSection {
   height: 100%;
+  position: absolute;
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: 60px 28px;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
   /* background: rgb(246, 92, 92); */
 }
-
 
 
 .footer-container {
   width: 100%;
   max-width: 1260px;
-  padding: 0px 90px 50px 200px; 
+  padding: 0px 180px 50px 180px; 
   position: relative;
   display: flex;
   flex-direction: column;
@@ -487,6 +484,7 @@ a {
 .footer-header {
   display: flex;
   align-items: center;
+
   width: 100%;
 
 }
@@ -542,20 +540,24 @@ h1.hero-title {
 .circle-btn {
   position: absolute;
   right: 7.5%;
-  top:  -15%;
-  width: 170px;
-  height: 170px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   border: none;
   padding: 0;
   z-index: 1;
   background: transparent;
+  /* visual handled by inner layer */
   cursor: pointer;
+  overflow: visible;
   display: inline-flex;
   align-items: center;
   justify-content: center;
 }
 
+/* INNER LAYER (moves toward cursor) */
 .circle-inner {
   --tx: 0px;
   --ty: 0px;
@@ -592,8 +594,8 @@ h1.hero-title {
   position: relative;
   z-index: 2;
   color: #fff;
-  font-weight: 500;
-  font-size: 1.3rem;
+  font-weight: 700;
+  font-size: 0.95rem;
   pointer-events: none;
   transform: translate(0, 0);
   transition: transform .12s ease;
@@ -604,25 +606,26 @@ h1.hero-title {
 .footer-contacts {
   display: flex;
   gap: 18px;
+
   flex-wrap: wrap;
   align-items: center;
 }
 
 .pill-btn {
   display: inline-block;
-  padding: 17px 35px;
+  padding: 12px 26px;
   border-radius: 999px;
-  border: 1px solid var(--muted);
+  border: 1px solid var(--pill-border);
   color: var(--text);
   background: transparent;
-  font-size: 1.1rem;
-  /* transition: background .18s ease, transform .12s; */
+  font-size: 0.95rem;
+  transition: background .18s ease, transform .12s;
 }
 
-/* .pill-btn:hover {
+.pill-btn:hover {
   background: #101010;
   transform: translateY(-3px)
-} */
+}
 
 /* Responsive */
 @media (max-width:1000px) {

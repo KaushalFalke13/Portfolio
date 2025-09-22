@@ -1,52 +1,79 @@
+function initLocomotiveScroll() {
+  gsap.registerPlugin(ScrollTrigger);
 
-function LocomotiveScroll() { gsap.registerPlugin(ScrollTrigger);
+  const scroller = document.querySelector('[data-scroll-container]');
+  const locoScroll = new LocomotiveScroll({
+    el: scroller,
+    smooth: true,
+    lerp: 0.03
+  });
 
-const locoScroll = new LocomotiveScroll({
-  el: document.querySelector(".smooth-scroll"),
-  smooth: true,
-  lerp: 0.03
-});
-// each time Locomotive Scroll updates, tell ScrollTrigger to update too (sync positioning)
-locoScroll.on("scroll", ScrollTrigger.update);
+  window.locoScroll = locoScroll;
+  window.scrollEl = scroller;
 
-// tell ScrollTrigger to use these proxy methods for the ".smooth-scroll" element since Locomotive Scroll is hijacking things
-ScrollTrigger.scrollerProxy(".smooth-scroll", {
-  scrollTop(value) {
-    return arguments.length ? locoScroll.scrollTo(value, 0, 0) : locoScroll.scroll.instance.scroll.y;
-  }, // we don't have to define a scrollLeft because we're only scrolling vertically.
-  getBoundingClientRect() {
-    return {top: 0, left: 0, width: window.innerWidth, height: window.innerHeight};
-  },
-  // LocomotiveScroll handles things completely differently on mobile devices - it doesn't even transform the container at all! So to get the correct behavior and avoid jitters, we should pin things with position: fixed on mobile. We sense it by checking to see if there's a transform applied to the container (the LocomotiveScroll-controlled element).
-  pinType: document.querySelector(".smooth-scroll").style.transform ? "transform" : "fixed"
-});
+  locoScroll.on("scroll", ScrollTrigger.update);
 
+  ScrollTrigger.scrollerProxy(scroller, {
+    scrollTop(value) {
+      return arguments.length
+        ? locoScroll.scrollTo(value, 0, 0)
+        : locoScroll.scroll.instance.scroll.y;
+    },
+    getBoundingClientRect() {
+      return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight };
+    },
+    pinType: getComputedStyle(scroller).transform !== "none" ? "transform" : "fixed"
+  });
 
+  ScrollTrigger.addEventListener("refresh", () => locoScroll.update());
 
-// each time the window updates, we should refresh ScrollTrigger and then update LocomotiveScroll. 
-ScrollTrigger.addEventListener("refresh", () => locoScroll.update());
+  // Initialize animations AFTER everything is ready
+  locoScroll.on('ready', () => {
+    setTimeout(() => {
+      initAboutAnimation();
+      locoScroll.update();
+      ScrollTrigger.refresh();
+    }, 100);
+  });
 
-// after everything is set up, refresh() ScrollTrigger and update LocomotiveScroll because padding may have been added for pinning, etc.
-ScrollTrigger.refresh();
+  return locoScroll;
 }
 
+function initAboutAnimation() {
+  const scroller = window.scrollEl;
 
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: ".about-wrapper",
+      scroller: scroller,
+      start: "top top",
+      end: "+=100%",
+      pin: true,
+      pinSpacing: true,
+      scrub: 1,
+      anticipatePin: 1,
+      // markers: true, // Remove this in production
+      // onEnter: () => console.log("Entered about section"),
+    }
+  });
 
-
-
-
-
-
-
-
-
-
-
-function initAll() {
-  initLoader();
-  initNavbarScroll();
-  initAboutAnimation();
-  initCurveAnimation("curvePath", ".curveContainer");
+  tl.to('.about-section', {
+    scale: 8,
+    transformOrigin: "50% 50%",
+    duration: 1,
+    ease: "power2.inOut"
+  })
+    .to('.about-section', {
+      autoAlpha: 0,
+      duration: 0.6,
+      ease: "power2.inOut"
+    }, "-=0.25")
+    .to('.projects', {
+      autoAlpha: 1,
+      duration: 0.8,
+      pointerEvents: 'auto',
+      ease: "power2.inOut"
+    }, "<0.15");
 }
 function initLoader() {
   const greeting = document.querySelector('.greeting');
@@ -59,7 +86,6 @@ function initLoader() {
 
   let index = 0;
 
-  // Display greetings one by one
   const showNextGreeting = () => {
     if (index < greetingsList.length) {
       greeting.innerText = greetingsList[index];
@@ -74,12 +100,6 @@ function initLoader() {
   const completeLoading = () => {
     mainContent.classList.add('show');
     loader.classList.add('fade-out');
-
-    setTimeout(() => {
-      loader.style.display = 'none';
-      initNameScroll();
-      ScrollTrigger.refresh();  // ✅ recalc positions
-    }, 800);
   };
 
   showNextGreeting();
@@ -104,43 +124,6 @@ function initNavbarScroll() {
 
   return () => window.removeEventListener("scroll", handleScroll);
 }
-function initAboutAnimation() {
-  const tl = gsap.timeline({
-    defaults: { ease: "power1.inOut" },
-    scrollTrigger: {
-      trigger: ".about-wrapper",
-      start: "top top",
-      end: "+=150%",
-      pin: true,
-      pinSpacing: true,
-      scrub: 1,
-      anticipatePin: 1,
-    },
-    onComplete: () => {
-      console.log("About animation completed");
-      ScrollTrigger.refresh();
-      // footerAnimation();
-    }
-  });
-
-  tl.to('.about-section', {
-    scale: 8,
-    transformOrigin: "50% 50%",
-    duration: 1
-  })
-    .to('.about-section', {
-      autoAlpha: 0,
-      opacity: 0,
-      duration: 0.6
-    }, "-=0.25")
-    .to('.projects', {
-      autoAlpha: 1,
-      opacity: 1,
-      duration: 0.8,
-      pointerEvents: 'auto'
-    }, "<0.15");
-
-}
 function initCurveAnimation(pathId, triggerSelector, minWidth = 0, maxWidth = 180) {
   const path = document.getElementById(pathId);
   if (!path) {
@@ -153,9 +136,12 @@ function initCurveAnimation(pathId, triggerSelector, minWidth = 0, maxWidth = 18
   const tl = gsap.timeline({
     scrollTrigger: {
       trigger: triggerSelector,
+      scroller: window.scrollEl,
       start: "top 90%",
-      end: "top 10%",
-      scrub: 0.8
+      end: "top 5%",
+      scrub: 0.8,
+      // markers: true,`
+      // onEnter: () => console.log("Curve animation triggered"),
     }
   });
 
@@ -181,6 +167,7 @@ function initCurveAnimation(pathId, triggerSelector, minWidth = 0, maxWidth = 18
   // }
   // });
 }
+
 function startAdvancedSeamlessScroll(el1, el2, baseSpeedPxPerSec, initialDirection = 'left') {
 
   el1.style.transform = '';
@@ -353,67 +340,44 @@ function initNameScroll() {
     setTimeout(initNameScroll, 500);
   }
 }
+function skillsCardScroll() {
+  const tl = gsap.timeline({
+    defaults: { ease: "power1.inOut" },
+    scrollTrigger: {
+      trigger: ".skills",
+      start: "top top",
+      end: "+=200%",
+      scrub: true,
+      // markers: true,
+    }
+  });
+  tl.to(".skillsCardsContainer1", {
+    x: 400,
+    ease: "none"
+  }, 0);
+  tl.to(".skillsCardsContainer2", {
+    x: -400,
+    ease: "none"
+  }, 0);
+}
+function footerAnimation() {
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: ".footer-wrapper",
+      scroller: window.scrollEl,
+      start: "top 90%",
+      end: "top 10%",
+      scrub: true,
+    }
+  });
+  tl.fromTo(
+    ".circle-btn",
 
-// function skillsCardScroll() {
-
-//   const tl = gsap.timeline({
-//     defaults: { ease: "power1.inOut" },
-//     scrollTrigger: {
-//       trigger: ".skills",
-//       start: "top top",
-//       end: "+=200%",
-//       scrub: true,
-//       markers: true,
-//     }
-//   });
-
-//   tl.to(".skillsCardsContainer1", {
-//     x: 400,
-//     ease: "none"
-//   }, 0);
-
-//   tl.to(".skillsCardsContainer2", {
-//     x: -400 ,
-//     ease: "none"
-//   }, 0);
-// }
-// skillsCardScroll();
-
-
-
-
-// function footerAnimation() {
-//   const tl = gsap.timeline({
-//     scrollTrigger: {
-//       trigger: ".footer-wrapper",
-//       start: "top bottom",
-//       end: "bottom top",
-//       scrub: 2,
-//       markers: true,
-//     }
-//   });
-
-//   tl.fromTo(
-//     ".FooterSection",
-//     { y: "20vh" },
-//     { y: "-20vh", ease: "none" }
-//   );
-
-//   // Circle button moves in at the same time
-//   tl.fromTo(
-//     ".circle-btn",
-//     { x: "-60px" },
-//     { x: "0px", ease: "none" },
-//     "<" // "<" = start at the same time as previous animation
-//   );
-// }
-
-// const scroll = new LocomotiveScroll({
-//   el: document.querySelector("[data-scroll-container]"),
-//   smooth: true
-// });
-
-
+    { transform: "translateX(-60px)" },
+    { transform: "translateX(0px)", ease: "none" },
+    "<"
+  );
+}
 
 (function () {
   const btn = document.querySelector('.circle-btn');
@@ -426,7 +390,7 @@ function initNameScroll() {
   let targetX = 0, targetY = 0;
   let currentX = 0, currentY = 0;
   let rafId = null;
-  const maxOffset = 18; 
+  const maxOffset = 18;
 
   function updateRect() {
     rect = btn.getBoundingClientRect();
@@ -488,5 +452,31 @@ function initNameScroll() {
   btn.addEventListener('pointercancel', onLeave);
 
 }());
+
+function getSectionPosition(selector) {
+  const el = document.querySelector(selector);
+  if (!el || !window.locoScroll) return null;
+
+  // Element’s top relative to viewport + current locomotive scroll position
+  const top = el.getBoundingClientRect().top + window.locoScroll.scroll.instance.scroll.y;
+  const bottom = el.getBoundingClientRect().bottom + window.locoScroll.scroll.instance.scroll.y;
+
+  return { top, bottom };
+}
+
+function initAll() {
+  const loco = initLocomotiveScroll();
+  setTimeout(() => {
+    initNavbarScroll();
+    initLoader();
+    initNameScroll(); 
+    // initAboutAnimation();
+    initCurveAnimation("curvePath", ".curveContainer");
+    ScrollTrigger.refresh();
+    console.log(getSectionPosition('.about-wrapper'));
+    footerAnimation();
+  }, 300);
+}
+
 
 window.addEventListener('load', initAll);

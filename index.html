@@ -6,135 +6,157 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
+  <div class="main" data-scroll-container>
 
-  <button class="navbarButton" onclick="toggleMenu()">Menu</button>
-
-  <div class="loader">
-    <div class="greeting">Hello</div>
-  </div>
-
-  <div class="background">
-
-  </div>
-
-  <section class="hero">
-    <nav class="navbar">
-      <div class="logo">K</div>
-      <ul class="nav-item">
-        <li><a href="#about">About</a></li>
-        <li><a href="/project.html">Projects</a></li>
-        <li><a href="#skills">Skills</a></li>
-        <li><a href="/contact.html">Contact</a></li>
-      </ul>
-    </nav>
-    <div class="hero-image">
-
+    <div class="loader">
+      <div class="greeting">Hello</div>
     </div>
-    <div class="hero-text">
-      <span class="hero-text-Content">Java Full Stack Developer</span>
-      <span class="hero-text-Content small">Spring Boot | React</span>
-    </div>
-    <div class="name-wrap">
-      <div class="name name1">aushal Falke - Kaushal Falke - K</div>
-      <div class="name name2">aushal Falke - Kaushal Falke - K</div>
-    </div>
-  </section>
 
-  <div class="about-wrapper">
-    <section id="about" class="about-section">
-      <div class="container">
-        "Hi there!
-        I'm Kaushal, a software engineer with [X years] experience who loves solving problems with code. Whether it's
-        building web apps with React and Node.js, developing REST APIs, or experimenting with cloud technologies, I
-        enjoy learning and creating software that makes a real impact.
-        I'm passionate about writing clean, maintainable code and have helped [mention a specific achievement or project
-        type]. I'm always continuously improving my skills and contributing to projects that solve real-world problems
-        like [brief example].
-        When I'm not coding, you might find me [personal interest]. I'm currently exploring [new technology/skill] and
-        always excited to connect with fellow developers and discuss new opportunities.
+    <section class="hero" data-scroll>
+      <nav class="navbar">
+        <div class="logo">K</div>
+        <ul class="nav-item">
+          <li><a href="#about">About</a></li>
+          <li><a href="/project.html">Projects</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="/contact.html">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="hero-image" data-scroll data-scroll-speed="-0.7">
+
+      </div>
+      <div class="hero-text">
+        <span class="hero-text-Content">Java Full Stack Developer</span>
+        <span class="hero-text-Content small">Spring Boot | React</span>
+      </div>
+      <div class="name-wrap">
+        <div class="name name1">aushal Falke - Kaushal Falke - K</div>
+        <div class="name name2">aushal Falke - Kaushal Falke - K</div>
       </div>
     </section>
 
-    <section class="projects">
+    <section class="about-wrapper" data-scroll>
+      <section id="about" class="about-section">
+        <div class="container">
+          "Hi there!
+          I'm Kaushal, a software engineer with [X years] experience who loves solving problems with code. Whether it's
+          building web apps with React and Node.js, developing REST APIs, or experimenting with cloud technologies, I
+          enjoy learning and creating software that makes a real impact.
+          I'm passionate about writing clean, maintainable code and have helped [mention a specific achievement or
+          project
+          type]. I'm always continuously improving my skills and contributing to projects that solve real-world problems
+          like [brief example].
+          When I'm not coding, you might find me [personal interest]. I'm currently exploring [new technology/skill] and
+          always excited to connect with fellow developers and discuss new opportunities.
+        </div>
+      </section>
+    </section>
+
+    <section class="projects" data-scroll>
       <h2>Projects</h2>
       <div class="project">
+        <div class="project-card">
+          <div class="project-image" style="background-image: url('/project1.png');"></div>
+          <div class="project-content">
+            <h3>Project Title 1</h3>
+            <p>A brief description of Project 1. This project involves...</p>
+            <a href="#" class="project-link">View Project</a>
+          </div>
+        </div>
 
+        <div class="project-card">
+          <div class="project-image" style="background-image: url('/project2.png');"></div>
+          <div class="project-content">
+            <h3>Project Title 2</h3>
+            <p>A brief description of Project 2. This project focuses on...</p>
+            <a href="#" class="project-link">View Project</a>
+          </div>
+        </div>
+
+        <div class="project-card">
+          <div class="project-image" style="background-image: url('/project3.png');"></div>
+          <div class="project-content">
+            <h3>Project Title 3</h3>
+            <p>A brief description of Project 3. The main features include...</p>
+            <a href="#" class="project-link">View Project</a>
+          </div>
+        </div>
       </div>
     </section>
+
+
+    <section class="skills" data-scroll>
+
+      <div class="SkillContainer">
+
+        <div class="skillsCardsContainer1">
+          <div class="skillCard"><img src="/image-1.png" alt=""></div>
+          <div class="skillCard"><img src="/image-2.jpg" alt=""></div>
+          <div class="skillCard"><img src="/image-3.jpg" alt=""></div>
+          <div class="skillCard"><img src="/image-4.jpg" alt=""></div>
+          <div class="skillCard"><img src="/image-5.jpg" alt=""></div>
+          <div class="skillCard"><img src="/image-2.jpg" alt=""></div>
+          <div class="skillCard"><img src="/image-3.jpg" alt=""></div>
+          <div class="skillCard"><img src="/image-4.jpg" alt=""></div>
+        </div>
+
+        <div class="skillsCardsContainer2">
+          <div class="skillCard"><img src="/image-1.png" alt=""></div>
+          <div class="skillCard"><img src="/image-2.jpg" alt=""></div>
+          <div class="skillCard"><img src="/image-3.jpg" alt=""></div>
+          <div class="skillCard"><img src="/image-4.jpg" alt=""></div>
+          <div class="skillCard"><img src="/image-5.jpg" alt=""></div>
+          <div class="skillCard"><img src="/image-2.jpg" alt=""></div>
+          <div class="skillCard"><img src="/image-3.jpg" alt=""></div>
+          <div class="skillCard"><img src="/image-4.jpg" alt=""></div>
+        </div>
+      </div>
+
+      <svg class="curveContainer" viewBox="0 0 1440 150" preserveAspectRatio="none">
+        <path id="curvePath" d="M0,0 C480,180 960,180 1440,0 L1440,0 L480,0 Z" fill="white"></path>
+      </svg>
+    </section>
+
+    <section class="footer-wrapper" data-scroll>
+      <div class="FooterSection" data-scroll data-scroll-speed="-3">
+        <div class="footer-container">
+          <div class="footer-header">
+            <img class="profile-img" src="/image-1.png" alt="Profile demo">
+            <h1 class="hero-title">Let’s work <br> together</h1>
+            <div class="right-arrow" aria-hidden="true">↘</div>
+          </div>
+
+          <div class="line-wrap" aria-hidden="true">
+            <div class="divider"></div>
+
+            <button class="circle-btn" aria-label="Get in touch">
+              <span class="circle-inner" aria-hidden="true">
+                <span class="circle-text">Get in touch</span>
+              </span>
+            </button>
+          </div>
+
+          <div class="footer-contacts">
+            <a class="pill-btn" href="mailto:kaushalfalke01@gmail.com">kaushalfalke01@gmail.com</a>
+            <a class="pill-btn" href="tel:+49 7499069229">+49 7499069229</a>
+          </div>
+        </div>
+        .footer-links
+      </div>
+    </section>
+
   </div>
 
-  <section class="skills">
-
-    <div class="SkillContainer">
-
-      <div class="skillsCardsContainer1">
-        <div class="skillCard"><img src="/image-1.png" alt=""></div>
-        <div class="skillCard"><img src="/image-2.jpg" alt=""></div>
-        <div class="skillCard"><img src="/image-3.jpg" alt=""></div>
-        <div class="skillCard"><img src="/image-4.jpg" alt=""></div>
-        <div class="skillCard"><img src="/image-5.jpg" alt=""></div>
-        <div class="skillCard"><img src="/image-2.jpg" alt=""></div>
-        <div class="skillCard"><img src="/image-3.jpg" alt=""></div>
-        <div class="skillCard"><img src="/image-4.jpg" alt=""></div>
-      </div>
-
-      <div class="skillsCardsContainer2">
-        <div class="skillCard"><img src="/image-1.png" alt=""></div>
-        <div class="skillCard"><img src="/image-2.jpg" alt=""></div>
-        <div class="skillCard"><img src="/image-3.jpg" alt=""></div>
-        <div class="skillCard"><img src="/image-4.jpg" alt=""></div>
-        <div class="skillCard"><img src="/image-5.jpg" alt=""></div>
-        <div class="skillCard"><img src="/image-2.jpg" alt=""></div>
-        <div class="skillCard"><img src="/image-3.jpg" alt=""></div>
-        <div class="skillCard"><img src="/image-4.jpg" alt=""></div>
-      </div>
-    </div>
-
-    <svg class="curveContainer" viewBox="0 0 1440 150" preserveAspectRatio="none">
-      <path id="curvePath" d="M0,0 C480,180 960,180 1440,0 L1440,0 L480,0 Z" fill="white"></path>
-    </svg>
-  </section>
-
-  <section class="footer-wrapper">
-    <div class="FooterSection">
-      <div class="footer-container">
-        <div class="footer-header">
-        <img class="profile-img" src="https://via.placeholder.com/160" alt="Profile demo">
-          <h1 class="hero-title">Let’s work <br> together</h1>
-          <div class="right-arrow" aria-hidden="true">↘</div>
-        </div>
-
-        <div class="line-wrap" aria-hidden="true">
-          <div class="divider"></div>
-
-          <!-- BUTTON: container stays still; inner layer moves -->
-          <button class="circle-btn" aria-label="Get in touch">
-            <span class="circle-inner" aria-hidden="true">
-              <span class="circle-text">Get in touch</span>
-            </span>
-          </button>
-        </div>
-
-        <div class="footer-contacts">
-          <a class="pill-btn" href="mailto:info@dennissnellenberg.com">info@dennissnellenberg.com</a>
-          <a class="pill-btn" href="tel:+31627847430">+31 6 27 84 74 30</a>
-        </div>
-      </div>
-      .footer-links
-    </div>
-  </section>
 
 
-
-
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="index.js"></script>
+  <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+  <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/locomotive-scroll/dist/locomotive-scroll.min.js"></script>
+  <script src="index.js"></script>
 
 </body>
 
